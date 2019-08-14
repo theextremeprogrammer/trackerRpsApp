@@ -1,8 +1,8 @@
 describe('play', () => {
-    let requests, observer
+    let game, observer
 
     beforeEach(() => {
-        requests = new Game()
+        game = new Game()
     })
 
     describe('player 1 wins scenarios', () => {
@@ -11,21 +11,21 @@ describe('play', () => {
         })
 
         it('rock vs scissors', () => {
-            requests.play('rock', 'scissors', observer)
+            game.play('rock', 'scissors', observer)
 
 
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('scissors vs paper', () => {
-            requests.play('scissors', 'paper', observer)
+            game.play('scissors', 'paper', observer)
 
 
             expect(observer.p1Wins).toHaveBeenCalled()
         })
 
         it('paper vs rock', () => {
-            requests.play('paper', 'rock', observer)
+            game.play('paper', 'rock', observer)
 
 
             expect(observer.p1Wins).toHaveBeenCalled()
@@ -38,21 +38,21 @@ describe('play', () => {
         })
 
         it('scissors vs rock', () => {
-            requests.play('scissors', 'rock', observer)
+            game.play('scissors', 'rock', observer)
 
 
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('paper vs scissors', () => {
-            requests.play('paper', 'scissors', observer)
+            game.play('paper', 'scissors', observer)
 
 
             expect(observer.p2Wins).toHaveBeenCalled()
         })
 
         it('rock vs paper', () => {
-            requests.play('rock', 'paper', observer)
+            game.play('rock', 'paper', observer)
 
 
             expect(observer.p2Wins).toHaveBeenCalled()
@@ -65,21 +65,21 @@ describe('play', () => {
         })
 
         it('rock vs rock', () => {
-            requests.play('rock', 'rock', observer)
+            game.play('rock', 'rock', observer)
 
 
             expect(observer.tie).toHaveBeenCalled()
         })
 
         it('scissors vs scissors', () => {
-            requests.play('scissors', 'scissors', observer)
+            game.play('scissors', 'scissors', observer)
 
 
             expect(observer.tie).toHaveBeenCalled()
         })
 
         it('paper vs paper', () => {
-            requests.play('paper', 'paper', observer)
+            game.play('paper', 'paper', observer)
 
 
             expect(observer.tie).toHaveBeenCalled()
@@ -92,21 +92,21 @@ describe('play', () => {
         })
 
         it('invalid vs rock', () => {
-            requests.play('sailboat', 'rock', observer)
+            game.play('spock', 'rock', observer)
 
 
             expect(observer.invalid).toHaveBeenCalled()
         })
 
         it('rock vs invalid', () => {
-            requests.play('rock', 'sailboat', observer)
+            game.play('rock', 'spock', observer)
 
 
             expect(observer.invalid).toHaveBeenCalled()
         })
 
         it('invalid vs invalid', () => {
-            requests.play('sailboat', 'sailboat', observer)
+            game.play('spock', 'spock', observer)
 
 
             expect(observer.invalid).toHaveBeenCalled()
