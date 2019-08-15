@@ -116,17 +116,35 @@ describe('play', () => {
 
 function Game() {
     this.play = (player1Choice, player2Choice, outcomeObserver) => {
-        if (['rock', 'scissors', 'paper'].includes(player1Choice) === false ||
-            ['rock', 'scissors', 'paper'].includes(player2Choice) === false ) {
+        new PlayRound(player1Choice, player2Choice, outcomeObserver).process()
+    }
+}
+
+function PlayRound(player1Choice, player2Choice, outcomeObserver) {
+    this.process = () => {
+        if (invalidScenario(player1Choice) ||
+            invalidScenario(player2Choice)) {
             outcomeObserver.invalid()
-        } else if (player1Choice === player2Choice) {
+        } else if (tieScenario()) {
             outcomeObserver.tie()
-        } else if (player1Choice === 'rock' && player2Choice === 'scissors' ||
-            player1Choice === 'scissors' && player2Choice === 'paper' ||
-            player1Choice === 'paper' && player2Choice === 'rock') {
+        } else if (player1WinsScenarios()) {
             outcomeObserver.player1Wins()
         } else {
             outcomeObserver.player2Wins()
         }
+    }
+
+    function invalidScenario(playerChoice) {
+        return ['rock', 'scissors', 'paper'].includes(playerChoice) === false
+    }
+
+    function player1WinsScenarios() {
+        return player1Choice === 'rock' && player2Choice === 'scissors' ||
+            player1Choice === 'scissors' && player2Choice === 'paper' ||
+            player1Choice === 'paper' && player2Choice === 'rock'
+    }
+
+    function tieScenario() {
+        return player1Choice === player2Choice
     }
 }
