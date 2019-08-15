@@ -139,20 +139,20 @@ function PlayRound(player1Choice, player2Choice, outcomeObserver) {
     }
 
     function player1WinsScenarios() {
-        return player1Choice === Throw.ROCK && player2Choice === Throw.SCISSORS ||
-            player1Choice === Throw.SCISSORS && player2Choice === Throw.PAPER ||
-            player1Choice === Throw.PAPER && player2Choice === Throw.ROCK
+        return player1Choice === Choice.ROCK && player2Choice === Choice.SCISSORS ||
+            player1Choice === Choice.SCISSORS && player2Choice === Choice.PAPER ||
+            player1Choice === Choice.PAPER && player2Choice === Choice.ROCK
     }
 
     function tieScenario() {
         return player1Choice === player2Choice
     }
 
-    const Throw = {
+    const Choice = {
         ROCK: 'rock',
         SCISSORS: 'scissors',
         PAPER: 'paper',
     }
 
-    const VALID_THROWS = [Throw.ROCK, Throw.SCISSORS, Throw.PAPER]
+    const VALID_THROWS = [Choice.ROCK, Choice.SCISSORS, Choice.PAPER]
 }
