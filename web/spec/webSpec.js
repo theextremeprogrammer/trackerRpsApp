@@ -2,6 +2,7 @@ import RPSApp from '../src/RPSApp'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReactTestUtils from 'react-dom/test-utils'
 
 describe('play form', () => {
     beforeEach(() => {
@@ -88,6 +89,23 @@ describe('play form', () => {
         })
     })
 
+    describe('submitting a game', () => {
+        it('sends the users input to the game module', () => {
+            // render app w/spy
+            let playSpy = jasmine.createSpy('playSpy')
+            renderApp({play: playSpy})
+
+            enterTextIntoInput('p1Choice', 'rock')
+            enterTextIntoInput('p2Choice', 'scissors')
+
+
+            submitForm()
+
+
+            expect(playSpy).toHaveBeenCalledWith('rock', 'scissors', jasmine.any(Object))
+        })
+    })
+
     let domFixture
 
     function setupDOM() {
@@ -99,11 +117,17 @@ describe('play form', () => {
         domFixture.remove()
     }
 
-    function renderApp(alwaysInvalidGame) {
+    function renderApp(game) {
         ReactDOM.render(
-            <RPSApp game={alwaysInvalidGame}/>,
+            <RPSApp game={game}/>,
             domFixture
         )
+    }
+
+    function enterTextIntoInput(inputName, inputValue) {
+        let p1ChoiceInput = document.querySelector(`[name="${inputName}"]`)
+        p1ChoiceInput.value = inputValue
+        ReactTestUtils.Simulate.change(p1ChoiceInput)
     }
 
     function submitForm() {
