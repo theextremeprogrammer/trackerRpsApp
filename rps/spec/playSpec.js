@@ -1,5 +1,5 @@
 describe('play', () => {
-    let game, observer
+    let game, outcomeObserver
 
     beforeEach(() => {
         game = new Game()
@@ -7,126 +7,126 @@ describe('play', () => {
 
     describe('player 1 wins scenarios', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj('observer', ['p1Wins'])
+            outcomeObserver = jasmine.createSpyObj('outcomeObserver', ['player1Wins'])
         })
 
         it('rock vs scissors', () => {
-            game.play('rock', 'scissors', observer)
+            game.play('rock', 'scissors', outcomeObserver)
 
 
-            expect(observer.p1Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player1Wins).toHaveBeenCalled()
         })
 
         it('scissors vs paper', () => {
-            game.play('scissors', 'paper', observer)
+            game.play('scissors', 'paper', outcomeObserver)
 
 
-            expect(observer.p1Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player1Wins).toHaveBeenCalled()
         })
 
         it('paper vs rock', () => {
-            game.play('paper', 'rock', observer)
+            game.play('paper', 'rock', outcomeObserver)
 
 
-            expect(observer.p1Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player1Wins).toHaveBeenCalled()
         })
     })
 
     describe('player 2 wins scenarios', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj('observer', ['p2Wins'])
+            outcomeObserver = jasmine.createSpyObj('outcomeObserver', ['player2Wins'])
         })
 
         it('scissors vs rock', () => {
-            game.play('scissors', 'rock', observer)
+            game.play('scissors', 'rock', outcomeObserver)
 
 
-            expect(observer.p2Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player2Wins).toHaveBeenCalled()
         })
 
         it('paper vs scissors', () => {
-            game.play('paper', 'scissors', observer)
+            game.play('paper', 'scissors', outcomeObserver)
 
 
-            expect(observer.p2Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player2Wins).toHaveBeenCalled()
         })
 
         it('rock vs paper', () => {
-            game.play('rock', 'paper', observer)
+            game.play('rock', 'paper', outcomeObserver)
 
 
-            expect(observer.p2Wins).toHaveBeenCalled()
+            expect(outcomeObserver.player2Wins).toHaveBeenCalled()
         })
     })
 
     describe('tie scenarios', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj('observer', ['tie'])
+            outcomeObserver = jasmine.createSpyObj('outcomeObserver', ['tie'])
         })
 
         it('rock vs rock', () => {
-            game.play('rock', 'rock', observer)
+            game.play('rock', 'rock', outcomeObserver)
 
 
-            expect(observer.tie).toHaveBeenCalled()
+            expect(outcomeObserver.tie).toHaveBeenCalled()
         })
 
         it('scissors vs scissors', () => {
-            game.play('scissors', 'scissors', observer)
+            game.play('scissors', 'scissors', outcomeObserver)
 
 
-            expect(observer.tie).toHaveBeenCalled()
+            expect(outcomeObserver.tie).toHaveBeenCalled()
         })
 
         it('paper vs paper', () => {
-            game.play('paper', 'paper', observer)
+            game.play('paper', 'paper', outcomeObserver)
 
 
-            expect(observer.tie).toHaveBeenCalled()
+            expect(outcomeObserver.tie).toHaveBeenCalled()
         })
     })
 
     describe('invalid scenarios', () => {
         beforeEach(() => {
-            observer = jasmine.createSpyObj('observer', ['invalid'])
+            outcomeObserver = jasmine.createSpyObj('outcomeObserver', ['invalid'])
         })
 
         it('invalid vs rock', () => {
-            game.play('spock', 'rock', observer)
+            game.play('spock', 'rock', outcomeObserver)
 
 
-            expect(observer.invalid).toHaveBeenCalled()
+            expect(outcomeObserver.invalid).toHaveBeenCalled()
         })
 
         it('rock vs invalid', () => {
-            game.play('rock', 'spock', observer)
+            game.play('rock', 'spock', outcomeObserver)
 
 
-            expect(observer.invalid).toHaveBeenCalled()
+            expect(outcomeObserver.invalid).toHaveBeenCalled()
         })
 
         it('invalid vs invalid', () => {
-            game.play('spock', 'spock', observer)
+            game.play('spock', 'spock', outcomeObserver)
 
 
-            expect(observer.invalid).toHaveBeenCalled()
+            expect(outcomeObserver.invalid).toHaveBeenCalled()
         })
     })
 })
 
 function Game() {
-    this.play = (p1, p2, observer) => {
-        if (['rock', 'scissors', 'paper'].includes(p1) === false ||
-            ['rock', 'scissors', 'paper'].includes(p2) === false ) {
-            observer.invalid()
-        } else if (p1 === p2) {
-            observer.tie()
-        } else if (p1 === 'rock' && p2 === 'scissors' ||
-            p1 === 'scissors' && p2 === 'paper' ||
-            p1 === 'paper' && p2 === 'rock') {
-            observer.p1Wins()
+    this.play = (player1Choice, player2Choice, outcomeObserver) => {
+        if (['rock', 'scissors', 'paper'].includes(player1Choice) === false ||
+            ['rock', 'scissors', 'paper'].includes(player2Choice) === false ) {
+            outcomeObserver.invalid()
+        } else if (player1Choice === player2Choice) {
+            outcomeObserver.tie()
+        } else if (player1Choice === 'rock' && player2Choice === 'scissors' ||
+            player1Choice === 'scissors' && player2Choice === 'paper' ||
+            player1Choice === 'paper' && player2Choice === 'rock') {
+            outcomeObserver.player1Wins()
         } else {
-            observer.p2Wins()
+            outcomeObserver.player2Wins()
         }
     }
 }
